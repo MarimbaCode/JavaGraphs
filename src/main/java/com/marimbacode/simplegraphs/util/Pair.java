@@ -1,9 +1,9 @@
-package com.marimbacode.graph;
+package com.marimbacode.simplegraphs.util;
 
-public class Edge<A> {
+public class Pair<A> {
 	
 	public final A a, b;
-	public Edge(A a, A b){
+	public Pair(A a, A b){
 		this.a = a;
 		this.b = b;
 	}
@@ -18,7 +18,7 @@ public class Edge<A> {
 		boolean result = false;
 		if (this == o) {
 			result = true;
-		} else if (o instanceof Edge other) {
+		} else if (o instanceof Pair other) {
 			if (a == other.a) {
 				result = b == other.b;
 			} else if (a == other.b) {

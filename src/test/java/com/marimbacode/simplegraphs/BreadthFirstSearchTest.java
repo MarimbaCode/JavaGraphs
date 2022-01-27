@@ -1,5 +1,8 @@
-package com.marimbacode.graph;
+package com.marimbacode.simplegraphs;
 
+import com.marimbacode.simplegraphs.graphs.Graph;
+import com.marimbacode.simplegraphs.pathfinding.BreadthFirstSearch;
+import com.marimbacode.simplegraphs.pathfinding.Pathfinding;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

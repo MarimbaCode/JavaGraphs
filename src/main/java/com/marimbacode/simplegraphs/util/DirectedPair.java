@@ -1,7 +1,7 @@
-package com.marimbacode.graph;
+package com.marimbacode.simplegraphs.util;
 
-public class DirectedEdge<A> extends Edge<A>{
-	public DirectedEdge(A a, A b) {
+public class DirectedPair<A> extends Pair<A> {
+	public DirectedPair(A a, A b) {
 		super(a, b);
 	}
 	/**Checks if the values for a and b are the same (order does matter)
@@ -14,7 +14,7 @@ public class DirectedEdge<A> extends Edge<A>{
 		boolean result = false;
 		if (this == o) {
 			result = true;
-		} else if (o instanceof Edge other) {
+		} else if (o instanceof Pair other) {
 			result = a.equals(other.a) && b.equals(other.b);
 		}
 		return result;

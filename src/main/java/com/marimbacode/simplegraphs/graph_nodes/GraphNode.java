@@ -1,4 +1,4 @@
-package com.marimbacode.graph;
+package com.marimbacode.simplegraphs.graph_nodes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,9 +8,6 @@ import java.util.Map;
  * @param <A> The identifier type of the graph
  */
 public class GraphNode<A> {
-    
-    /** The graph this vertex is attached to */
-    private Graph<A> graph;
     
     /** The identifier for the vertex */
     public A id;
@@ -35,14 +32,5 @@ public class GraphNode<A> {
         }
         adjacency.put(oId, ++connCount);
     }
-    
-    /**Sets the graph this vertex is in
-     *
-     * @param g The graph this vertex is in
-     */
-    public void setGraph(Graph<A> g){
-        graph = g;
-    }
-    
     
 }

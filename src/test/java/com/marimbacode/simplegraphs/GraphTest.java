@@ -1,5 +1,7 @@
-package com.marimbacode.graph;
+package com.marimbacode.simplegraphs;
 
+import com.marimbacode.simplegraphs.graphs.Graph;
+import com.marimbacode.simplegraphs.util.Pair;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -35,12 +37,12 @@ public class GraphTest {
 				vertices.toArray(String[]::new)
 		);
 		
-		List<Edge<String>> edges = new ArrayList<>();
-		edges.add(new Edge<>("A", "B"));
-		edges.add(new Edge<>("B", "C"));
-		edges.add(new Edge<>("A", "C"));
+		List<Pair<String>> edges = new ArrayList<>();
+		edges.add(new Pair<>("A", "B"));
+		edges.add(new Pair<>("B", "C"));
+		edges.add(new Pair<>("A", "C"));
 		
-		for (Edge<String> d : g.getEdges()) {
+		for (Pair<String> d : g.getEdges()) {
 		    assertTrue(edges.contains(d));
 		}
 		
@@ -70,14 +72,14 @@ public class GraphTest {
 				vertices.toArray(String[]::new)
 		);
 		
-		List<Edge<String>> edges = new ArrayList<>();
-		edges.add(new Edge<>("A", "B"));
-		edges.add(new Edge<>("B", "C"));
-		edges.add(new Edge<>("A", "C"));
-		edges.add(new Edge<>("A", "D"));
-		edges.add(new Edge<>("D", "C"));
+		List<Pair<String>> edges = new ArrayList<>();
+		edges.add(new Pair<>("A", "B"));
+		edges.add(new Pair<>("B", "C"));
+		edges.add(new Pair<>("A", "C"));
+		edges.add(new Pair<>("A", "D"));
+		edges.add(new Pair<>("D", "C"));
 		
-		for (Edge<String> d : g.getEdges()) {
+		for (Pair<String> d : g.getEdges()) {
 			assertTrue(edges.contains(d));
 		}
 	}

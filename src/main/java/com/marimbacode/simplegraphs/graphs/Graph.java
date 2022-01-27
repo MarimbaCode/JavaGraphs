@@ -1,6 +1,14 @@
-package com.marimbacode.graph;
+package com.marimbacode.simplegraphs.graphs;
 
-import java.util.*;
+import com.marimbacode.simplegraphs.graph_nodes.GraphNode;
+import com.marimbacode.simplegraphs.graph_nodes.GraphNodeFactory;
+import com.marimbacode.simplegraphs.util.GraphObserver;
+import com.marimbacode.simplegraphs.util.Pair;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**A base class to handle basic graph functions
  *
@@ -14,6 +22,8 @@ public class Graph<A>{
 	/** The factory used to generate new vertices */
 	protected GraphNodeFactory<A> factory = new DefaultGraphNodeFactory<>();
 	
+	private final Set<GraphObserver> graphObservers = new HashSet<>();
+	
 	/**Adds a new vertex to the graph if it does not exist
 	 *
 	 * @param id The identifier for this vertex
@@ -21,7 +31,6 @@ public class Graph<A>{
 	public void addVertex(A id) {
 		if(nodes.get(id) == null) {
 			GraphNode<A> node = factory.newNode();
-			node.setGraph(this);
 			node.id = id;
 			nodes.put(id, node);
 		}
@@ -34,6 +43,8 @@ public class Graph<A>{
 	 */
 	public void addEdge(A a, A b){
 		GraphNode<A> na, nb;
+		addVertex(a);
+		addVertex(b);
 		na = getNode(a);
 		nb = getNode(b);
 		
@@ -77,8 +88,23 @@ public class Graph<A>{
 		return nodes.get(id);
 	}
 	
-	protected Set<A> getAdjacent(A id){
+	/**Gets all adjacent vertices to the specified vertex
+	 *
+	 * @param id The vertex to get adjacency
+	 * @return A set of all identifiers for adjacent vertices
+	 */
+	public Set<A> getAdjacent(A id){
 		return getNode(id).adjacency.keySet();
+	}
+	
+	/**Creates and returns a new pair object for the graph
+	 *
+	 * @param a The first value in the pair
+	 * @param b The second value in the pair
+	 * @return A new pair of (A,B)
+	 */
+	public Pair<A> getPair(A a, A b){
+		return factory.newPair(a, b);
 	}
 	
 	/**Gets all the vertices in the graph
@@ -93,19 +119,42 @@ public class Graph<A>{
 	 *
 	 * @return An iterable of all the edges in the graph
 	 */
-	public Iterable<Edge<A>> getEdges(){
-		Set<Edge<A>> edges = new HashSet<>();
+	public Iterable<Pair<A>> getEdges(){
+		Set<Pair<A>> edges = new HashSet<>();
 		
 		Set<A> visited = new HashSet<>();
 		for(GraphNode<A> n: nodes.values()){
 			for(A a: n.adjacency.keySet()){
 				if(!visited.contains(a)){
-					edges.add(new Edge<A>(n.id, a));
+					edges.add(new Pair<A>(n.id, a));
 				}
 			}
 			visited.add(n.id);
 		}
 		return edges;
+	}
+	
+	/**
+	 * Notifies observer when the graph structure changes
+	 */
+	private void notifyChanges(){
+		graphObservers.forEach(GraphObserver::onChange);
+	}
+	
+	/**Registers a new observer for the graph
+	 *
+	 * @param g The observer to register
+	 */
+	public void registerObserver(GraphObserver g){
+		graphObservers.add(g);
+	}
+	
+	/**Unregisters an observer for the graph
+	 *
+	 * @param g The observer to remove
+	 */
+	public void unregisterObserver(GraphObserver g){
+		graphObservers.remove(g);
 	}
 	
 	@Override
@@ -122,10 +171,15 @@ public class Graph<A>{
 		return sb.toString();
 	}
 	
-	private static class DefaultGraphNodeFactory<A> implements GraphNodeFactory<A>{
+	protected static class DefaultGraphNodeFactory<A> implements GraphNodeFactory<A>{
 		@Override
 		public GraphNode<A> newNode() {
 			return new GraphNode<>();
+		}
+		
+		@Override
+		public Pair<A> newPair(A a, A b) {
+			return new Pair<>(a, b);
 		}
 	}
 }

@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.marimbacode.graph</groupId>
-    <artifactId>JavaGraphs</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>javagraphs</artifactId>
+    <version>1.0</version>
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -15,6 +15,14 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub MarimbaCode Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/MarimbaCode/JavaGraphs</url>
+        </repository>
+    </distributionManagement>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>

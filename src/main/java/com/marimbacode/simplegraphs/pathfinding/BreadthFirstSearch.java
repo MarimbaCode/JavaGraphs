@@ -1,4 +1,6 @@
-package com.marimbacode.graph;
+package com.marimbacode.simplegraphs.pathfinding;
+
+import com.marimbacode.simplegraphs.graphs.Graph;
 
 import java.util.*;
 
@@ -6,14 +8,14 @@ import java.util.*;
  *
  * @param <A> The identifier used in a graph
  */
-public class BreadthFirstSearch<A> extends Pathfinding<A>{
+public class BreadthFirstSearch<A> extends Pathfinding<A> {
 	
 	public BreadthFirstSearch(Graph<A> graph) {
 		super(graph);
 	}
 	
 	@Override
-	public List<A> pathFind(A start, A end) {
+	public void search(A start, A end) {
 		
 		HashMap<A, A> path = new HashMap<>();
 		HashSet<A> visited = new HashSet<>();
@@ -42,9 +44,15 @@ public class BreadthFirstSearch<A> extends Pathfinding<A>{
 		while(!current.equals(start)){
 			finalPath.add(current);
 			current = path.get(current);
+			if(current == null){
+				finalPath.clear();
+				break;
+			}
 		}
-		finalPath.add(start);
+		if(!finalPath.isEmpty()) {
+			finalPath.add(start);
+		}
 		Collections.reverse(finalPath);
-		return finalPath;
+		addPath(graph.getPair(start, end), finalPath);
 	}
 }
